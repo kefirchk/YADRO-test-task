@@ -8,8 +8,10 @@
 class EventManager
 {
 private:
-    bool check_time_interval(string time, string start_time, string end_time);
+    // Проверка на вхождения значения времени в заданный интервал
+    bool check_time_interval(string time, string start_time, string end_time); 
 
 public:
+    // Обработка события
     Event process_event(Event& event, bool& is_new_event);
 };

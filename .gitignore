@@ -3,3 +3,5 @@ test
 build
 source/*.o
 Makefile
+README.md
+Тестовое задание С++.docx

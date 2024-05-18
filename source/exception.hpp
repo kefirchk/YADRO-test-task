@@ -4,10 +4,13 @@
 class Exception
 {
 private:
-    size_t id;
-    string description;
+    size_t id;           // ID ошибки
+    string description;  // Описание ошибки
 public:
-    Exception(size_t id, string description);
+    // Контруктор с параметрами
+    Exception(size_t id, string description);  
+    
+    // Геттеры
     string get_description();
     size_t get_id();
 };

@@ -5,13 +5,13 @@
 class File
 {
 private:
-    string name;
-    ifstream stream;
+    string name;           // Имя файла
+    ifstream stream;       // Поток для файла (файловый дескриптор)
 public:
-    File(char* new_name);
-    ~File();
+    File(char* new_name);  // Конструктор с параметрами
+    ~File();               // Деструктор
 
-    bool open();
-    string read_line();
-    bool is_eof();
+    bool open();           // Открытие файла
+    string read_line();    // Чтение строки из файла
+    bool is_eof();         // Проверка на признак конца файла
 };

@@ -1,5 +1,6 @@
 #include "validator.hpp"
 
+// Валидация числа
 bool Validator::is_number(string line, size_t& number)
 {
     std::regex regex("(\\d+)");
@@ -12,6 +13,7 @@ bool Validator::is_number(string line, size_t& number)
     return false;
 }
 
+// Валидация двух подряд идущих значений времени в формате XX:XX
 bool Validator::is_two_time(string line, string& time_1, string& time_2)
 {
     std::regex regex("(\\d\\d:\\d\\d) (\\d\\d:\\d\\d)");
@@ -25,6 +27,7 @@ bool Validator::is_two_time(string line, string& time_1, string& time_2)
     return false;
 }
 
+// Валидация события
 bool Validator::is_event(string line, Event& event)
 {
     std::regex regex("(\\d\\d:\\d\\d) (\\d+) ([a-z0-9_-]+)( (\\d+))?");

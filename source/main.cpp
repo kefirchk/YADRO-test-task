@@ -2,7 +2,9 @@
 #include "validator.hpp"
 #include "event_manager.hpp"
 
-ComputerClub club;
+// Объект компьютерного клуба
+ComputerClub club; 
+
 
 int main(int argc, char* argv[])
 {
@@ -61,38 +63,24 @@ int main(int argc, char* argv[])
             // Вывод начального времени
             cout << club.start_time << endl;
 
-            // Обработка и генерация событий
+            // Проход по событиям
             EventManager event_manager;
-            bool is_new_event;
+            bool is_new_event;           // признак генерации исходящего событияы
             for(auto event : events)
             {
                 is_new_event = false;
                 try
                 {
-                    cout << "---------------------------" << endl;
-                    cout << "Clients: ";
-                    for(auto client : club.clients)
-                        cout << client << " ";
-                    
-                    cout << "\nClient queue: ";
-                    for(auto client : club.client_queue)
-                        cout << client << " ";
-
-                    cout << "\n---------------------------" << endl;
-                    for(auto table : club.tables)
-                    {
-                        cout << "Table ID: " << table.get_table_id() << endl;
-                        cout << "Table Status: " << table.is_busy() << endl;
-                        cout << "Table Client Name: " << table.get_client_name() << endl;
-                    }
-                    cout <<  endl << endl;
-
+                    // Вывод прочитанного события
                     cout << event.get_time() << " " << event.get_event_id() << " " << event.get_client_name();
                     if(event.get_table_number() != 0)
                         cout << " " << event.get_table_number();
                     cout << endl;
 
+                    // Обработка события
                     Event new_event = event_manager.process_event(event, is_new_event);
+                    
+                    // Исходящее событие?
                     if (is_new_event)
                     {
                         cout << new_event.get_time() << " " << new_event.get_event_id() << " " << new_event.get_client_name();
@@ -101,7 +89,7 @@ int main(int argc, char* argv[])
                         cout << endl;
                     }
                 }
-                catch (Exception& ex)
+                catch (Exception& ex)  // Ошибка (cобытие ID 13)
                 {
                     cout << event.get_time() << " " << ex.get_id() << " " << ex.get_description() << endl;
                 }
@@ -115,20 +103,25 @@ int main(int argc, char* argv[])
             // Сортировка объединенного списка клиентов
             all_clients.sort();
             
+            // Вывод подтвержения, что клиенты ушли
             for(auto client : all_clients)
             {
                 cout << club.end_time << " " << 11 << " " << client << endl;
             }
 
+            // Обновление времени работы столов
+            for(size_t i = 0; i < club.table_count; ++i)
+                if (club.tables[i].is_busy() == true)
+                    club.tables[i].update_full_time(club.end_time);
+
             // Вывод времени окончания работы клуба
             cout << club.end_time << endl;
 
-            // Вывод выручки
+            // Вывод выручки столов
             for(auto table: club.tables)
             {
-                // TO DO...
+                cout << table.get_table_id() << " " << table.calc_revenue(club.price_per_hour) << " " <<  table.get_full_time() << endl;
             }
-
         }
     }
     else

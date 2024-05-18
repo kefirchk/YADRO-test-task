@@ -1,15 +1,18 @@
 #include "file.hpp"
 
+// Конктруктор с параметрами
 File::File(char* name)
 {
     this->name = name;
 }
 
+// Деструктор
 File::~File()
 {
     stream.close();
 }
 
+// Открытие файла
 bool File::open()
 {
     stream.open(this->name);
@@ -21,6 +24,7 @@ bool File::open()
     return true;
 }
 
+// Чтения строки из файла
 string File::read_line()
 {
     string line;
@@ -31,6 +35,7 @@ string File::read_line()
     return line;
 }
 
+// Проверка признака конца файла
 bool File::is_eof()
 {
     return stream.eof();
