@@ -31,16 +31,6 @@ string File::read_line()
     return line;
 }
 
-string File::read_word()
-{
-    string word;
-    if (!(stream >> word)) {
-        cerr << "[ERROR]: Failed to read word" << endl;
-        return "";
-    }
-    return word;
-}
-
 bool File::is_eof()
 {
     return stream.eof();

@@ -15,6 +15,5 @@ public:
 
     bool open();
     string read_line();
-    string read_word();
     bool is_eof();
 };

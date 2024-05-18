@@ -1,6 +1,5 @@
 #pragma once
 #include "std_libs.hpp"
-#include "exception.hpp"
 
 class Event
 {
@@ -10,25 +9,39 @@ private:
     string client_name;
     size_t table_number;
 public:
-    
-    void parse_event_line(const string& event_line) {
-        std::regex event_regex("(\\d\\d:\\d\\d) (\\d+) (client\\d+)( )?(\\d+)?");
-        std::smatch match;
 
-        if (std::regex_match(event_line, match, event_regex)) {
-            time = match[1];
-            event_id = std::stoi(match[2]);
-            client_name = match[3];
-            if (match[5] != "") {
-                table_number = std::stoi(match[5]);
-            }
-        } else {
-            throw Exception(event_line);
-        }
+    Event()
+    {
+        this->time = "00:00";
+        this->client_name = "";
+    }
+    
+    Event(const Event& event)
+    {
+        this->time = event.time;
+        this->event_id = event.event_id;
+        this->client_name = event.client_name;
+        this->table_number = event.table_number;
     }
 
     string get_time() { return time; }
     string get_client_name() { return client_name; }
     size_t get_event_id() { return event_id; }
     size_t get_table_number() { return table_number; }
+
+    void set_time(const string& time) {
+        this->time = time;
+    }
+
+    void set_client_name(const string& client_name) {
+        this->client_name = client_name;
+    }
+
+    void set_event_id(const size_t& event_id) {
+        this->event_id = event_id;
+    }
+
+    void set_table_number(const size_t& table_number) {
+        this->table_number = table_number;
+    }
 };

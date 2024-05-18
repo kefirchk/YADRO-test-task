@@ -2,7 +2,7 @@
 #include "event.hpp"
 #include "file.hpp"
 #include "exception.hpp"
-
+#include "validator.hpp"
 
 struct ComputerClub
 {
@@ -20,34 +20,44 @@ int main(int argc, char* argv[])
     if (argc == 2)
     {
         File file(argv[1]);
+        Validator validator;
+        
+        // Чтение файла
         if(file.open() == true)
         {
-            try
-            {
-                club.table_count = stoi(file.read_line());
-                club.start_time = file.read_word();
-                club.end_time = file.read_line();
-                club.price_per_hour = stoi(file.read_line());
-            }
-            catch(Exception& ex)
-            {
-                cerr << "[ERROR]: " << ex.get_description() << endl;
-                return -1;
-            }
-            catch(exception &ex)
-            {
-                cerr << "[ERROR]: " << ex.what() << endl;
+            // Чтение числа столов
+            string line = file.read_line();
+            bool ok;
+            ok = validator.is_number(line, club.table_count);
+            if(!ok) {
+                cerr << "[ERROR]: " << line << endl;
                 return -1;
             }
 
+            // Чтение времени начала и окончания работы
+            line = file.read_line();
+            ok = validator.is_two_time(line, club.start_time, club.end_time);
+            if(!ok) {
+                cerr << "[ERROR]: " << line << endl;
+                return -1;
+            }
+            
+            // Чтение цены за час
+            line = file.read_line();
+            ok = validator.is_number(line, club.price_per_hour);
+            if(!ok) {
+                cerr << "[ERROR]: " << line << endl;
+                return -1;
+            }
+
+            // Чтение событий
             while(!file.is_eof())
             {
                 Event event;
-                string event_line = file.read_line();
-                try {
-                    event.parse_event_line(event_line);                
-                } catch(Exception& ex) {
-                    cerr << "[ERROR]: " << ex.get_description() << endl;
+                line = file.read_line();
+                ok = validator.is_event(line, event);
+                if(!ok) {
+                    cerr << "[ERROR]: " << line << endl;
                     return -1;
                 }
 
