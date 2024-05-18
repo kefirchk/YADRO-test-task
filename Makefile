@@ -2,7 +2,7 @@
 CC = g++
 CXXFLAGS = -W -Wall -Wno-unused-parameter -Wno-unused-variable -pedantic
 
-SOURCES1 = ./source/file.cpp ./source/exception.cpp ./source/event.cpp ./source/validator.cpp ./source/main.cpp
+SOURCES1 = ./source/file.cpp ./source/validator.cpp ./source/exception.cpp ./source/event.cpp ./source/event_manager.cpp  ./source/table.cpp ./source/main.cpp
 OBJECTS1 = $(SOURCES1:.cpp=.o)
 EXECUTABLE1 = ./build/program
 

@@ -27,7 +27,7 @@ bool Validator::is_two_time(string line, string& time_1, string& time_2)
 
 bool Validator::is_event(string line, Event& event)
 {
-    std::regex regex("(\\d\\d:\\d\\d) (\\d+) (client\\d+)( (\\d+))?");
+    std::regex regex("(\\d\\d:\\d\\d) (\\d+) ([a-z0-9_-]+)( (\\d+))?");
     std::smatch match;
 
     if (std::regex_match(line, match, regex)) {
